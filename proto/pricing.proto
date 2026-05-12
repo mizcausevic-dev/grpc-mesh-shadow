@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package mesh.shadow.v1;
+
+option go_package = "github.com/mizcausevic-dev/grpc-mesh-shadow/proto;pb";
+
+// PricingService is a small example service used to demonstrate
+// shadow traffic between a stable primary backend and an under-test
+// candidate backend.
+service PricingService {
+  rpc Quote(QuoteRequest) returns (QuoteResponse);
+}
+
+message QuoteRequest {
+  string sku = 1;
+  string tenant_id = 2;
+  int32 quantity = 3;
+}
+
+message QuoteResponse {
+  string sku = 1;
+  double unit_price_usd = 2;
+  double total_price_usd = 3;
+  string algorithm_id = 4; // identifies the pricing algorithm used; used to detect divergence
+}
